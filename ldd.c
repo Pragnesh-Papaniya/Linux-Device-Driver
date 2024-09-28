@@ -32,7 +32,7 @@ struct proc_ops driver_proc_ops={
     .proc_read=read
 };
 
-static int module_init(void){
+static int custom_init(void){
     printk("module_init: entry\n");
 
     custom_proc_node = proc_create("pdriver",
@@ -49,8 +49,11 @@ static int module_init(void){
     return 0;
 }
 
-static void module_exit(void){
+static void custom_exit(void){
     printk("module_exit: entry\n");
     proc_remove(custom_proc_node);
     printk("module_exit: exit\n");
 }
+
+module_init(custom_init);
+module_exit(custom_exit);
